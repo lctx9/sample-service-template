@@ -1,0 +1,23 @@
+server:
+  port: ${SERVER_PORT:8080}
+
+spring:
+  application:
+    name: gateway
+
+  cloud:
+    gateway:
+      server:
+        webflux:
+          # One route per service. Add a new route when you add a new service.
+          routes:
+            - id: sample-service
+              uri: ${SAMPLE_SERVICE_URL:http://localhost:8081}
+              predicates:
+                - Path=/api/v1/items/**
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info
